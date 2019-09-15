@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 import umap
+from openTSNE import TSNE
 
 
 def eng(X_train, X_test):
@@ -24,12 +25,18 @@ def eng(X_train, X_test):
 def add_emedding_features(X_train, X_test, **options):
     n_train = len(X_train)
     X = pd.concat([X_train, X_test], ignore_index=True)
+    print('umap...')
     embedding1 = umap.UMAP(**options).fit_transform(X)
     embedding2 = umap.UMAP(**options).fit_transform(MinMaxScaler().fit_transform(X))
+    print('tsne...')
+    embedding3 = TSNE().fit(X)
+    embedding4 = TSNE().fit(MinMaxScaler().fit_transform(X))
     n_components = options.get('n_components', 2)
     for i in range(n_components):
         X[f'embedding1_{i}'] = embedding1[:, i]
         X[f'embedding2_{i}'] = embedding2[:, i]
+        X[f'embedding3_{i}'] = embedding3[:, i]
+        X[f'embedding4_{i}'] = embedding4[:, i]
     X_train, X_test = X[:n_train], X[n_train:]
     return X_train, X_test
 
