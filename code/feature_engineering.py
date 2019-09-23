@@ -18,11 +18,6 @@ def eng(X_train, X_test):
     X['id_5'] = X['id'] % 5
     X['id_7'] = X['id'] % 7
     X['id_11'] = X['id'] % 11
-    X['ratio_A'] = X['min_A'] / X['max_A']
-    X['abs_ratio_A'] = np.abs(X['min_A'] / X['max_A'])
-    X['mean_median_A'] = X['mean_A'] == X['median_A']
-    X['first_less_last_A'] = X['first_A'] < X['last_A']
-    X['first_more_last_A'] = X['first_A'] > X['last_A']
     # X 1
     X['X_1_2_equal_X_1_3'] = X['X_1_2'] == X['X_1_3']
     X_train, X_test = X[:n_train], X[n_train:]
