@@ -45,8 +45,8 @@ def agg_and_merge(X1, X2, X3, embeddings):
     X2_aggregations.append(X2.groupby('id')['A'].max().reset_index().rename(columns={'A': 'max_A'}))
     # merge everything
     for X2_agg in X2_aggregations:
-        X = pd.merge(X, X2_agg, how='left', on='id')
+        X = pd.merge(X, X2_agg, on='id')
     for e in embeddings:
-        X = pd.merge(X, e, how='left', on='id')
-    X.fillna(-1000, inplace=True)
+        X = pd.merge(X, e, on='id')
+
     return X

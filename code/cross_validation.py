@@ -8,7 +8,12 @@ def CV_metrics(model, X_train, y_train):
     cv_strat = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
     cv = cross_validate(model, X_train, y_train, cv=cv_strat, scoring=scoring)
     for s in scoring:
-        print(s, ' avg: ', '%.3f' % np.mean(cv['test_' + s]), ' ', ['%.3f' % item for item in cv['test_' + s]])
+        #print(s, ' avg: ', '%.3f' % np.mean(cv['test_' + s]), ' ', ['%.3f' % item for item in cv['test_' + s]])
+        #print('delta: ', '%.3f' % (max(cv['test_' + s]) - min(cv['test_' + s])), ' std: ', '%.3f' % np.std(cv['test_' + s]))
+        avg = np.mean(cv['test_' + s])
+        delta = (max(cv['test_' + s]) - min(cv['test_' + s]))
+        std = np.std(cv['test_' + s])
+        print(f'avg: {avg:.3f}, delta: {delta:.3f}, std: {std:.3f}')
     return np.mean(cv['test_roc_auc'])
 
 
